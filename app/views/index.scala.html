@@ -1,0 +1,247 @@
+@(form: Form[ImageUtil.UploadImageForm], listImages: List[Image])
+
+@main("Carina Tavera") {
+
+    <!-- This section is for Splash Screen -->
+    <div class="ole">
+        <section id="jSplash">
+            <div id="circle"></div>
+        </section>
+    </div>
+    <!-- End of Splash Screen -->
+
+    <!-- Homepage Slider -->
+    <div id="home-slider">
+        <div class="overlay"></div>
+
+        <div class="slider-text">
+            <div id="slidecaption"></div>
+        </div>
+
+        <div class="control-nav">
+            <a id="prevslide" class="load-item"><i class="font-icon-arrow-simple-left"></i></a>
+            <a id="nextslide" class="load-item"><i class="font-icon-arrow-simple-right"></i></a>
+            <ul id="slide-list"></ul>
+
+            <a id="nextsection" href="#work"><i class="font-icon-arrow-simple-down"></i></a>
+        </div>
+    </div>
+    <!-- End Homepage Slider -->
+
+    <!-- Header -->
+    <header>
+        <div class="sticky-nav">
+            <a id="mobile-nav" class="menu-nav" href="#menu-nav"></a>
+
+            <div id="logo">
+                <a id="goUp" href="#home-slider" title="Carina">Carina</a>
+            </div>
+
+            <nav id="menu">
+                <ul id="menu-nav">
+                    <li class="current"><a href="#home-slider">Home</a></li>
+                    <li><a href="#work">My Work</a></li>
+                    <li><a href="#about">About Me</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+
+        </div>
+    </header>
+    <!-- End Header -->
+
+    <!-- Our Work Section -->
+    <div id="work" class="page">
+        <div class="container">
+                <!-- Title Page -->
+            <div class="row">
+                <div class="span12">
+                    <div class="title-page">
+                        <h2 class="title">My Work</h2>
+                    </div>
+                </div>
+            </div>
+                <!-- End Title Page -->
+
+                <!-- Portfolio Projects -->
+            <div class="row">
+                <div class="span3">
+                        <!-- Filter -->
+                    <nav id="options" class="work-nav">
+                        <ul id="filters" class="option-set" data-option-key="filter">
+                            <li class="type-work">Type of Work</li>
+                            <li><a href="#filter" data-option-value="*" class="selected">All Projects</a></li>
+                            @for(category <- Category.find.all()) {
+                                <li><a href="#filter" data-option-value=".@category.name">@category.name</a></li>
+                            }
+                        </ul>
+                    </nav>
+                        <!-- End Filter -->
+                </div>
+
+                <div class="span9">
+                    <div class="row">
+                        <section id="projects">
+                            <ul id="thumbs">
+
+                                    <!-- Item Project and Filter Name -->
+                                @for(image <- listImages) {
+                                    <li class="item-thumbs span3 @image.category">
+                                            <!-- Fancybox - Gallery Enabled - Title - Full Image -->
+                                        <a class="hover-wrap fancybox" data-fancybox-group="gallery" title="@image.name" href="@routes.ImageUtil.getImage(image.id)">
+                                            <span class="overlay-img"></span>
+                                            <span class="overlay-img-thumb font-icon-plus"></span>
+                                        </a>
+                                            <!-- Thumb Image and Description -->
+                                        <img src="@routes.ImageUtil.getImage(image.id)" alt="@image.description">
+                                    </li>
+                                }
+                                    <!-- End Item Project -->
+                            </ul>
+                        </section>
+
+                    </div>
+                </div>
+            </div>
+                <!-- End Portfolio Projects -->
+        </div>
+    </div>
+    <!-- End Our Work Section -->
+
+    <!-- About Section -->
+    <div id="about" class="page-alternate">
+        <div class="container">
+                <!-- Title Page -->
+            <div class="row">
+                <div class="span12">
+                    <div class="title-page">
+                        <h2 class="title">About Me</h2>
+                        @*<h3 class="title-description">Learn About our Team &amp; Culture.</h3>*@
+                    </div>
+                </div>
+            </div>
+                <!-- End Title Page -->
+
+                <!-- People -->
+            <div class="row">
+                    <!-- Start Profile -->
+                <div class="span4 profile">
+                </div>
+                    <!-- End Profile -->
+
+                    <!-- Start Profile -->
+                <div class="span4 profile">
+                    <div class="image-wrap">
+                        <div class="hover-wrap">
+                            <span class="overlay-img"></span>
+                            <span class="overlay-text-thumb">Creative Director</span>
+                        </div>
+                        <img src="@routes.Assets.versioned("/images/profile/profile-02.jpg")" alt="Jane Helf">
+                    </div>
+                    <h3 class="profile-name">Carina Tavera</h3>
+                    <p class="profile-description">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac augue at erat <a href="#">
+                        hendrerit dictum</a>.
+                        Praesent porta, purus eget sagittis imperdiet, nulla mi ullamcorper metus, id hendrerit metus diam vitae est. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
+
+                    <div class="social">
+                        <ul class="social-icons">
+                            <li><a href="#"><i class="font-icon-social-twitter"></i></a></li>
+                            <li><a href="#"><i class="font-icon-social-email"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+                    <!-- End Profile -->
+
+            </div>
+                <!-- End People -->
+        </div>
+    </div>
+    <!-- End About Section -->
+
+    <!-- Contact Section -->
+    <div id="contact" class="page">
+        <div class="container">
+                <!-- Title Page -->
+            <div class="row">
+                <div class="span12">
+                    <div class="title-page">
+                        <h2 class="title">Get in Touch</h2>
+                        <h3 class="title-description">
+                            We’re currently accepting new client projects. We look forward to serving you.</h3>
+                    </div>
+                </div>
+            </div>
+                <!-- End Title Page -->
+
+                <!-- Contact Form -->
+            <div class="row">
+                <div class="span9" ng-app="ContactForm">
+                    <div ng-controller="ContactController as contact">
+                        <form id="contact-form" class="contact-form" ng-submit="submit()" method="post">
+                            <p class="contact-name">
+                                <input id="contact_name" type="text" placeholder="Full Name" ng-model="c.name" value="" name="name" required="" />
+                            </p>
+                            <p class="contact-email">
+                                <input id="contact_email" type="text" placeholder="Email Address" ng-model="c.email" value="" name="email" required="" />
+                            </p>
+                            <p class="contact-message">
+                                <textarea id="contact_message" placeholder="Your Message" ng-model="c.message" name="message" rows="15" cols="40" required></textarea>
+                            </p>
+                            <p class="contact-submit">
+                                <button id="contact-submit" class="submit" type="submit">Send Your Email</button>
+                            </p>
+                            <div class="isa_info" ng-show="sending">Sending Message....</div>
+                            <div class="isa_success" ng-show="sent">Message Sent</div>
+                            <div class="isa_error" ng-show="failed">Message Failed</div>
+                            <div id="response">
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="span3">
+                    <div class="contact-details">
+                        <h3>Contact Details</h3>
+                        <ul>
+                            <li><a href="#">carina hotmail.com</a></li>
+                            <li>(916) 375-2525</li>
+                            <li>
+                                Arte Carina Tavera
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+                <!-- End Contact Form -->
+        </div>
+    </div>
+    <!-- End Contact Section -->
+
+    <!-- Socialize -->
+    <div id="social-area" class="page">
+        <div class="container">
+            <div class="row">
+                <div class="span12">
+                    <nav id="social">
+                        <ul>
+                            <li><a href="https://twitter.com/Bluxart" title="Follow Me on Twitter" target="_blank"><span class="font-icon-social-twitter"></span></a></li>
+                            <li><a href="http://dribbble.com/Bluxart" title="Follow Me on Dribbble" target="_blank"><span class="font-icon-social-dribbble"></span></a></li>
+                            <li><a href="http://forrst.com/people/Bluxart" title="Follow Me on Forrst" target="_blank"><span class="font-icon-social-forrst"></span></a></li>
+                            <li><a href="http://www.behance.net/alessioatzeni" title="Follow Me on Behance" target="_blank"><span class="font-icon-social-behance"></span></a></li>
+                            <li><a href="https://www.facebook.com/Bluxart" title="Follow Me on Facebook" target="_blank"><span class="font-icon-social-facebook"></span></a></li>
+                            <li><a href="https://plus.google.com/105500420878314068694" title="Follow Me on Google Plus" target="_blank"><span class="font-icon-social-google-plus"></span></a></li>
+                            <li><a href="http://www.linkedin.com/in/alessioatzeni" title="Follow Me on LinkedIn" target="_blank"><span class="font-icon-social-linkedin"></span></a></li>
+                            <li><a href="http://themeforest.net/user/Bluxart" title="Follow Me on ThemeForest" target="_blank"><span class="font-icon-social-envato"></span></a></li>
+                            <li><a href="http://zerply.com/Bluxart/public" title="Follow Me on Zerply" target="_blank"><span class="font-icon-social-zerply"></span></a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Socialize -->
+
+
+}

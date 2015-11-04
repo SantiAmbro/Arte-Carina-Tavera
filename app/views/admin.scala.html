@@ -1,0 +1,227 @@
+@(form: Form[ImageUtil.UploadImageForm], listImages: List[Image], listCategories: List[Category])
+
+@main("Carina Tavera") {
+
+
+    <!-- Header -->
+    <header>
+        <div class="sticky-nav">
+            <a id="mobile-nav" class="menu-nav" href="#menu-nav"></a>
+
+            <div id="logo">
+                <a id="goUp" href="#home-slider" title="Carina">Carina</a>
+            </div>
+
+            <nav id="menu">
+                <ul id="menu-nav">
+                    <li><a href="#category">Manage Categories</a></li>
+                    <li><a href="#upload">Upload Image</a></li>
+                    <li><a href="#work">My work</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <!-- End Header -->
+
+    <!-- Category Section -->
+    <div id="category" class="page">
+        <div class="container">
+            <div class="row">
+                <div class="span9">
+                        <!-- Trigger the modal with a button -->
+                    <h1>Manage Categories</h1>
+                    <table style="width : 100 %">
+                        <col width="200">
+                        <col width="200">
+                        <tr>
+                            <th><button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">
+                                Add Category</button></th>
+                            <th><button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal2">
+                                Delete Category</button></th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Category Section -->
+
+    <!-- Upload Section -->
+    <div id="upload" class="page-alternate">
+        <div class="container">
+            <div class="row">
+                <div class="span9">
+                    @if(form.hasGlobalErrors) {
+                        <div class="alert alert-error">
+                            <a class="close" data-dismiss="alert">x</a>
+                            <strong>Oh noo!</strong> @form.globalError.message
+                        </div>
+                    }
+                    @if(flash.contains("error")) {
+                        <div class="alert alert-error">
+                            <strong>Oh noo!</strong> @flash.get("error")
+                        </div>
+                    }
+                    @if(flash.contains("success")) {
+                        <div class="alert alert-success">
+                            <strong>Well done!</strong> @flash.get("success")
+                        </div>
+                    }
+
+
+                    <h1>Upload a new image</h1>
+                    @helper.form(action = routes.ImageUtil.uploadImage, 'enctype -> "multipart/form-data", 'class -> "contact-form", 'id -> "contact-form") {
+                        <p class="contact-submit">
+                            <input type="file" class="btn btn-default" accept=".jpg, .png, .bmp" name="image">
+                        </p>
+                        <p class="contact-name">
+                            <input id="contact_name" type="text" placeholder="Image Name" value="" name="name" />
+                        </p>
+                        <p class="contact-message">
+                            <textarea id="contact_message" placeholder="Image Description" name="description" rows="15" cols="40"></textarea>
+                        </p>
+                        <select id="example39" multiple="multiple" style="display : none ;"><option value="multiselect-all">Select all</option>
+                            @for(category <- listCategories) {
+                                <option value="@category.name">@category.name</option>
+                            }
+                        </select>
+                        <p class="contact-submit">
+                            <button class="submit" type="submit">Upload image!</button>
+                        </p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Upload Section -->
+
+    <!-- Our Work Section -->
+    <div id="work" class="page">
+        <div class="container">
+                <!-- Title Page -->
+            <div class="row">
+                <div class="span12">
+                    <div class="title-page">
+                        <h2 class="title">My Work</h2>
+                    </div>
+                </div>
+            </div>
+                <!-- End Title Page -->
+
+                <!-- Portfolio Projects -->
+            <div class="row">
+                <div class="span3">
+                        <!-- Filter -->
+                    <nav id="options" class="work-nav">
+                        <ul id="filters" class="option-set" data-option-key="filter">
+                            <li class="type-work">Type of Work</li>
+                            <li><a href="#filter" data-option-value="*" class="selected">All Projects</a></li>
+                            @for(category <- listCategories) {
+                                <li><a href="#filter" data-option-value=".@category.name">@category.name</a></li>
+                            }
+                        </ul>
+                    </nav>
+                        <!-- End Filter -->
+                </div>
+
+                <div class="span9">
+                    <div class="row">
+                        <section id="projects">
+                            <ul id="thumbs">
+                                    <!-- Item Project and Filter Name -->
+                                @for(image <- listImages) {
+                                    <li class="item-thumbs span3 @image.category">
+                                            <!-- Fancybox - Gallery Enabled - Title - Full Image -->
+                                        <a class="hover-wrap fancybox" data-fancybox-group="gallery" title="@image.name" href="@routes.ImageUtil.getImage(image.id)">
+                                            <span class="overlay-img"></span>
+                                            <span class="overlay-img-thumb font-icon-plus"></span>
+                                        </a>
+                                            <!-- Thumb Image and Description -->
+                                        <img src="@routes.ImageUtil.getImage(image.id)" alt="'@image.description'">
+                                    </li>
+                                }
+                                    <!-- End Item Project -->
+
+                            </ul>
+                        </section>
+                    </div>
+                </div>
+            </div>
+                <!-- End Portfolio Projects -->
+        </div>
+    </div>
+    <!-- End Our Work Section -->
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+                <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" style="color : black">Add Category</h4>
+                </div>
+                <div class="modal-body">
+                    <table style="width : 100 %">
+                        <col width="400">
+                        <col width="150">
+                        <tr>
+                        @helper.form(action = routes.CategoryUtil.addCategory()) {
+                            <td><input type="text" placeholder="Category Name" value="" name="name" /></td>
+                            <td><button class="submit btn" type="submit">Add Category</button></td>
+                        }
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Modal -->
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal2" role="dialog">
+        <div class="modal-dialog">
+                <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" style="color : black">Delete Category</h4>
+                </div>
+                <div class="modal-body">
+                    <table style="width : 100 %">
+                        <col width="430">
+                        <col width="80">
+                        <tr>
+                            <th style="float : left ;">Category Name</th>
+                            <th></th>
+
+                        </tr>
+                        @for(category <- listCategories) {
+                            <tr>
+                                <td style="height : 50px">@category.name</td>
+                                @helper.form(action = routes.CategoryUtil.deleteCategory(category.id)) {
+                                    <td><button class="submit btn" type="submit">Delete</button></td>
+                                }
+                            </tr>
+                        }
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Modal -->
+
+    <!-- Multiselect -->
+    <select id="example39" multiple="multiple" style="display : none ;"><option value="multiselect-all">Select all</option>
+        @for(category <- listCategories) {
+            <option value="@routes.CategoryUtil.getCategory(category.id)">@category.name</option>
+        }
+    </select>
+    <!-- End Multiselect -->
+}
