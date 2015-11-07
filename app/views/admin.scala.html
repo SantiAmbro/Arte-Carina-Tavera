@@ -80,7 +80,7 @@
                         <p class="contact-message">
                             <textarea id="contact_message" placeholder="Image Description" name="description" rows="15" cols="40"></textarea>
                         </p>
-                        <select id="example39" multiple="multiple" style="display : none ;"><option value="multiselect-all">Select all</option>
+                        <select id="example39" multiple="multiple" name="category" style="display : none ;"><option value="multiselect-all">Select all</option>
                             @for(category <- listCategories) {
                                 <option value="@category.name">@category.name</option>
                             }
@@ -130,7 +130,7 @@
                             <ul id="thumbs">
                                     <!-- Item Project and Filter Name -->
                                 @for(image <- listImages) {
-                                    <li class="item-thumbs span3 @image.category">
+                                    <li class="item-thumbs span3 @image.category isotope-item">
                                             <!-- Fancybox - Gallery Enabled - Title - Full Image -->
                                         <a class="hover-wrap fancybox" data-fancybox-group="gallery" title="@image.name" href="@routes.ImageUtil.getImage(image.id)">
                                             <span class="overlay-img"></span>
@@ -217,11 +217,5 @@
     </div>
     <!-- End Modal -->
 
-    <!-- Multiselect -->
-    <select id="example39" multiple="multiple" style="display : none ;"><option value="multiselect-all">Select all</option>
-        @for(category <- listCategories) {
-            <option value="@routes.CategoryUtil.getCategory(category.id)">@category.name</option>
-        }
-    </select>
-    <!-- End Multiselect -->
+
 }

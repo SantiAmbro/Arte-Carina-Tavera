@@ -804,16 +804,16 @@ nav#menu #menu-nav li a:hover {
 	opacity: 0;
 	filter: alpha(opacity=0);
 	
-	-webkit-transition: all 450ms ease-out 0s;	
+	-webkit-transition: all 450ms ease-out 0s;
 	   -moz-transition: all 450ms ease-out 0s;
 		 -o-transition: all 450ms ease-out 0s;
 		    transition: all 450ms ease-out 0s;
-		  
+
 	-webkit-transform: rotateY(180deg) scale(0.5,0.5);
 	   -moz-transform: rotateY(180deg) scale(0.5,0.5);
 		-ms-transform: rotateY(180deg) scale(0.5,0.5);
 		 -o-transform: rotateY(180deg) scale(0.5,0.5);
-			transform: rotateY(180deg) scale(0.5,0.5);	
+			transform: rotateY(180deg) scale(0.5,0.5);
 }
 
 .image-wrap:hover .hover-wrap,

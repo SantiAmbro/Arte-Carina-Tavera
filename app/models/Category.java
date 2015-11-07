@@ -25,4 +25,6 @@ public class Category extends Model {
 
     public static Model.Finder<Long, Category> find = new Model.Finder<>(Category.class);
 
+
+
 }

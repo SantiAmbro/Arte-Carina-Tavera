@@ -23,7 +23,7 @@ public class Image extends Model {
 
     public String description;
 
-    @ManyToMany(mappedBy = "images")
+    @ManyToMany(mappedBy = "images" ,cascade = CascadeType.ALL)
     public List<Category> category;
 
     @Lob

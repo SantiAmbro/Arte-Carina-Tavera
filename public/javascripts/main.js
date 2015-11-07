@@ -132,6 +132,9 @@ jQuery(function ($) {
                 $container.isotope({
                     // options
                     animationEngine: 'best-available',
+                    transformsEnabled: false,
+                    resizable: true,
+                    resizesContainer: true,
                     itemSelector: '.item-thumbs',
                     layoutMode: 'fitRows'
                 });
@@ -200,34 +203,6 @@ jQuery(function ($) {
             });
         }
     }
-
-
-    /* ==================================================
-     Contact Form
-     ================================================== */
-
-    //CARINA.contactForm = function () {
-    //    $("#contact-submit").on('click', function () {
-    //        $contact_form = $('#contact-form');
-    //
-    //        var fields = $contact_form.serialize();
-    //
-    //        $.ajax({
-    //            type: "POST",
-    //            url: '/assets/php/contact.php',
-    //            data: fields,
-    //            dataType: 'json',
-    //            success: function (response) {
-    //                if (response.status) {
-    //                    $('#contact-form input').val('');
-    //                    $('#contact-form textarea').val('');
-    //                }
-    //                $('#response').empty().html(response.html);
-    //            }
-    //        });
-    //        return false;
-    //    });
-    //}
 
     /* ==================================================
      Menu Highlight
@@ -421,7 +396,6 @@ jQuery(function ($) {
         CARINA.goUp();
         CARINA.filter();
         CARINA.fancyBox();
-        //CARINA.contactForm();
         CARINA.scrollToTop();
         CARINA.utils();
         CARINA.accordion();

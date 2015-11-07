@@ -2,12 +2,10 @@ package controllers;
 
 import models.Category;
 import models.Image;
-import play.data.DynamicForm;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
-import scala.util.parsing.json.JSONArray;
 import views.html.admin;
 
 import java.io.*;
@@ -36,14 +34,15 @@ public class ImageUtil extends Controller {
 
     public Result uploadImage() {
         Form<UploadImageForm> imageform = form(UploadImageForm.class).bindFromRequest();
+
         if (imageform.hasErrors()) {
-            return badRequest(admin.render(imageform, Image.find.all(),Category.find.all()));
+            return badRequest(admin.render(imageform, Image.find.all(), Category.find.all()));
 
         } else {
             Image image = new Image(
                     imageform.get().name,
                     imageform.get().description,
-                    imageform.get().category,
+                    categoriesFromRequest(),
                     castByteArray(imageform.get().image.getFile())
             );
             image.save();
@@ -53,7 +52,7 @@ public class ImageUtil extends Controller {
         }
     }
 
-    public static byte[] castByteArray(File image){
+    public static byte[] castByteArray(File image) {
                 /* write the image data into the byte array */
         byte[] data = new byte[(int) image.length()];
         InputStream inStream = null;
@@ -74,13 +73,33 @@ public class ImageUtil extends Controller {
         return data;
     }
 
+    public List<Category> categoriesFromRequest() {
+        String[] jsonData = request().body().asMultipartFormData().asFormUrlEncoded().get("category");
+        Form<Category> recordDummyForm = Form.form(Category.class);
+        List<Category> categories = new ArrayList<>();
+        for (String aJsonData : jsonData) {
+            categories.add(recordDummyForm.fill(Category.find.all().get(findCategoryWS(aJsonData))).get());
+        }
+        return categories;
+    }
+
+    public int findCategoryWS(String jsonData) {
+        List<Category> list = Category.find.all();
+        for (int i = 0; i < list.size(); i++) {
+            String name = list.get(i).name;
+            if (name.equals(jsonData)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
 
     public static class UploadImageForm {
         public Http.MultipartFormData.FilePart image;
         public String name;
         public String description;
-        public List<Category> category;
-
+//        public List<Category> category;
 
         public String validate() {
             Http.MultipartFormData data = request().body().asMultipartFormData();

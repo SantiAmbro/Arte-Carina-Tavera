@@ -7,6 +7,7 @@ GET         /                              controllers.Application.index()
 GET         /admin                         controllers.Application.admin()
 GET         /category/:id                  controllers.CategoryUtil.getCategory(id: Long)
 GET         /image/:id.jpg                 controllers.ImageUtil.getImage(id: Long)
+
 POST        /                              controllers.ImageUtil.uploadImage()
 POST        /addCategory                   controllers.CategoryUtil.addCategory()
 POST        /category/delete/:id           controllers.CategoryUtil.deleteCategory(id: Long)
