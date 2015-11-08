@@ -238,6 +238,7 @@
 /* Title helper */
 
 .fancybox-title {
+	text-transform: capitalize;
 	visibility: hidden;
 	position: relative;
 	text-shadow: none;
@@ -257,7 +258,11 @@
 .fancybox-opened .fancybox-title p{
 	font-size: 16px;
 	font-weight: 300;
-	margin-bottom: 0;	
+	margin-bottom: 0;
+	overflow: auto;
+	text-overflow: ellipsis;
+	word-wrap: break-word;
+	text-transform: capitalize;
 }
 
 .fancybox-title-float-wrap {

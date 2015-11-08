@@ -9,10 +9,10 @@ GET         /category/:id                  controllers.CategoryUtil.getCategory(
 GET         /image/:id.jpg                 controllers.ImageUtil.getImage(id: Long)
 
 POST        /                              controllers.ImageUtil.uploadImage()
+POST        /image/delete/:id              controllers.ImageUtil.deleteImage(id: Long)
 POST        /addCategory                   controllers.CategoryUtil.addCategory()
 POST        /category/delete/:id           controllers.CategoryUtil.deleteCategory(id: Long)
 POST        /contact-form/send-form        controllers.ContactForm.sendForm()
 
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file                  controllers.Assets.versioned(path="/public", file: Asset)
-POST        /assets/*file                  controllers.Assets.versioned(path = "/public", file : Asset)

@@ -31,6 +31,22 @@ public class ImageUtil extends Controller {
         }
     }
 
+    public Result editImage(long id) {
+        Form<Image> imageForm = form(Image.class).bindFromRequest();
+        Image image = Image.find.byId(id);
+        image.name = imageForm.data().get("name");
+        image.description = imageForm.data().get("description");
+        image.category = categoriesFromRequest();
+        image.save();
+        return redirect(routes.Application.admin());
+    }
+
+    public Result deleteImage(long id) {
+        Image image = Image.find.byId(id);
+        image.delete();
+        return redirect(routes.Application.admin());
+    }
+
 
     public Result uploadImage() {
         Form<UploadImageForm> imageform = form(UploadImageForm.class).bindFromRequest();
@@ -99,7 +115,6 @@ public class ImageUtil extends Controller {
         public Http.MultipartFormData.FilePart image;
         public String name;
         public String description;
-//        public List<Category> category;
 
         public String validate() {
             Http.MultipartFormData data = request().body().asMultipartFormData();

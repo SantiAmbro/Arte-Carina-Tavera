@@ -12,7 +12,7 @@ import static play.data.Form.form;
 public class Application extends Controller {
 
     public Result index() {
-        return ok(index.render(form(ImageUtil.UploadImageForm.class), Image.find.all()));
+        return ok(index.render(Image.find.all()));
     }
 
     public Result admin() {

@@ -12,7 +12,7 @@ public class ContactForm extends Controller {
 
     public Result sendForm() {
         DynamicForm requestData = DynamicForm.form().bindFromRequest();
-        String name, email, subject, message;
+        String name, email, message;
         name = requestData.get("name");
         email = requestData.get("email");
         message = requestData.get("message");
@@ -24,7 +24,7 @@ public class ContactForm extends Controller {
         }
 
         try {
-            MailSenderUtil.send(new String[]{"santiago.ambrosetti@ing.austral.edu.ar"}, messageToSend.toString());
+            MailSenderUtil.send(new String[]{"cmoscon@hotmail.com"}, messageToSend.toString());
         } catch (Exception e) {
             e.printStackTrace();
             return badRequest();

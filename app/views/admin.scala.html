@@ -129,17 +129,22 @@
                         <section id="projects">
                             <ul id="thumbs">
                                     <!-- Item Project and Filter Name -->
-                                @for(image <- listImages) {
-                                    <li class="item-thumbs span3 @image.category isotope-item">
-                                            <!-- Fancybox - Gallery Enabled - Title - Full Image -->
+                                @for(image: Image <- listImages) {
+                                    <li class="item-thumbs span3 @image.findCategory(image.id) isotope-item">
+                                          <!-- Fancybox - Gallery Enabled - Title - Full Image -->
                                         <a class="hover-wrap fancybox" data-fancybox-group="gallery" title="@image.name" href="@routes.ImageUtil.getImage(image.id)">
                                             <span class="overlay-img"></span>
                                             <span class="overlay-img-thumb font-icon-plus"></span>
                                         </a>
                                             <!-- Thumb Image and Description -->
-                                        <img src="@routes.ImageUtil.getImage(image.id)" alt="'@image.description'">
+                                        <img src="@routes.ImageUtil.getImage(image.id)" alt="@image.description">
                                     </li>
-                                }
+                                    <li class="item-thumbs span1 isotope-item">
+                                    @helper.form(action = routes.ImageUtil.deleteImage(image.id)){
+                                        <button class="submit btn" type="submit">Delete</button>
+                                    }
+                                    </li>
+                                    }
                                     <!-- End Item Project -->
 
                             </ul>
